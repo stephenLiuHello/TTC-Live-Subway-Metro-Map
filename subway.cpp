@@ -51,7 +51,7 @@ double Location::get_longitude(){
 }
 
 int error(int a, int b, int dx, int dy){
-    return a * dy - b * dx;
+    return std::abs(a) * dy - std::abs(b) * dx;
 }
 
 Segment Location::print_path(Location &other){
@@ -63,7 +63,7 @@ Segment Location::print_path(Location &other){
     // Unit analysis: m / (m / unit) = m * (unit / m) = unit
     // Number of units = Distance / Distance per unit
     // 10 m / unit
-    int vsteps = std::max(1, (int)std::ceil(std::abs(vdist) / 50.0));
+    int vsteps = std::max(1, (int)std::ceil(std::abs(vdist) / 100.0));
     int hsteps = std::max(1, (int)std::ceil(std::abs(hdist) / 50.0));
 
     std::vector<std::vector<char>> path(vsteps + 1, std::vector<char>(hsteps + 1, ' '));
@@ -195,9 +195,9 @@ void total_path(std::vector<Segment> paths){
     for (int i = 0; i < map.size(); i++) {
         for (int j = 0; j < map[i].size(); j++) {
             if(map[i][j] == '*'){
-                std::cout << "\033[31m" << map[i][j];
+                std::cout << "\033[32m" << map[i][j];
             } else{
-                std::cout << "\033[30m" << map[i][j];
+                std::cout << "\033[34m" << map[i][j];
             }
         }
         std::cout << '\n';
